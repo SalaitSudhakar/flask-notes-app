@@ -14,6 +14,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from a local `.env` file (if present).
+# This keeps configuration (SECRET_KEY, DATABASE_URL, DEBUG, etc.) out
+# of source control and makes local development convenient.
+load_dotenv()
 
 # Create the SQLAlchemy object here so models can import it:
 # `from . import db`
@@ -36,10 +42,19 @@ def create_app():
     """
     app = Flask(__name__)
 
-    # SECRET_KEY is required for sessions and flash messages. In a real
-    # project you should keep this secret and load it from environment
-    # variables or a config file, not hard-coded.
-    app.config["SECRET_KEY"] = "KAJFAKJFAKFJAU382942"
+    # SECRET_KEY is required for sessions and flash messages. Prefer
+    # providing `SECRET_KEY` via environment variables (e.g. a `.env`
+    # file for development or an environment variable in production).
+    # If it is not set, generate a temporary key for development and
+    # print a warning so the developer knows to set a real secret.
+    secret = os.getenv("SECRET_KEY")
+    if not secret:
+        # Generate a random fallback key for local development only.
+        # This is intentionally insecure for production but prevents
+        # crashes when the variable is missing during local testing.
+        secret = os.urandom(24).hex()
+        print("WARNING: SECRET_KEY not set. Using generated development key.")
+    app.config["SECRET_KEY"] = secret
 
     # Build an absolute path to the database file (website/database.db)
     basedir = os.path.abspath(os.path.dirname(__file__))
@@ -47,7 +62,13 @@ def create_app():
 
     # Tell SQLAlchemy where the database lives. The three slashes mean
     # "absolute path" for SQLite: sqlite:////absolute/path
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
+        "DATABASE_URL", f"sqlite:///{db_path}"
+    )
+
+    # Avoid expensive overhead that we don't need; disable the
+    # modification tracker (recommended for most apps).
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # Initialize SQLAlchemy with this app
     db.init_app(app)
