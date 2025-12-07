@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% block title %} Notes App -login {% endblock %} {%
+block content %}
+<div
+  class="row d-flex justify-content-center align-items-center p-2 p-sm-3 p-md-4"
+>
+  <form
+    method="POST"
+    id="login-form"
+    class="col-12 col-md-8 col-lg-6 col-xl-5 bg-dark text-white p-4 p-md-5 rounded-4 shadow-custom-green"
+  >
+    <!-- Login form: posts `email` and `password` to the server -->
+    <h3 class="text-center py-4 text-teal fw-bold">Login</h3>
+
+    <!-- Email -->
+    <div class="input-group mb-5">
+      <span class="input-group-text" id="basic-addon2"
+        ><i class="fa-solid fa-envelope fs-3 text-teal"></i
+      ></span>
+      <input
+        type="email"
+        name="email"
+        class="form-control px-4 py-3 shadow-none fw-medium fs-5"
+        placeholder="Enter Your Email "
+        aria-label="Email"
+        aria-describedby="basic-addon2"
+        required
+      />
+    </div>
+
+    <!-- Password -->
+    <div class="input-group mb-3 position-relative">
+      <span class="input-group-text" id="basic-addon3"
+        ><i class="fa-solid fa-lock fs-3 text-teal"></i>
+      </span>
+      <input
+        type="password"
+        name="password"
+        class="form-control px-4 py-3 shadow-none fw-medium fs-5"
+        placeholder="Enter Your Password "
+        aria-label="password"
+        aria-describedby="basic-addon3"
+        required
+      />
+    </div>
+
+    <!-- Show password checkbox-->
+    <div class="input-group mb-4">
+      <input
+        type="checkbox"
+        id="show-password"
+        name="show-password"
+        class="me-2"
+      />
+      <label for="show-password" class="text-secondary">Show password</label>
+    </div>
+
+    <!-- Button -->
+    <button
+      type="submit"
+      class="btn btn-teal w-100 p-3 rounded-3 fw-medium fs-5"
+    >
+      login
+    </button>
+
+    <p class="text-center my-3">
+      Don&apos;t you have an account?
+      <a class="text-decoration-none text-teal" href="/sign-up">Sign Up</a>
+    </p>
+  </form>
+</div>
+{% endblock %}

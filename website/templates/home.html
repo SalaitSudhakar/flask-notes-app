@@ -1,0 +1,89 @@
+{% extends "base.html" %} {% block title %} Notes App - Home {% endblock %} {%
+block content %}
+<div
+  class="row d-flex justify-content-center align-items-start p-2 p-sm-3 p-md-4"
+>
+  <!-- A welcome message -->
+  <!-- `new_user` is set after signup to optionally change the greeting -->
+  <h2 class="text-center text-dark my-3">
+    Welcome {% if not new_user %} {% else %}Back{% endif %}
+    <span class="text-teal text-uppercase">{{ current_user.name }}!</span>
+  </h2>
+  <!-- Notes List -->
+  <div
+    class="col-12 col-md-10 col-lg-8 col-xl-7 bg-dark text-white p-4 p-md-5 rounded-4"
+  >
+    <!-- Header -->
+    <h3 class="text-center py-3 text-teal fw-bold">Your Notes</h3>
+
+    <!-- Notes List -->
+    <!-- User notes are rendered here. Each <li> stores note data in
+          `data-` attributes used by the front-end JavaScript. -->
+    <ul class="list-group list-group-flush mb-4" id="notes-list">
+      {% if current_user.notes %} {% for note in current_user.notes %}
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center bg-secondary bg-opacity-25 text-white border border-secondary rounded-3 my-2 list-hover"
+        data-note-id="{{ note.id }}"
+        data-note-content="{{ note.data }}"
+      >
+        <span class="fw-medium note-text">{{ note.data }}</span>
+
+        <div class="note-actions">
+          <!-- Edit button -->
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-warning rounded-circle btn-edit"
+            aria-label="Edit note"
+          >
+            <i class="fa-solid fa-pen"></i>
+          </button>
+
+          <!-- Delete button -->
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-danger rounded-circle btn-delete"
+            aria-label="Delete note"
+          >
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </li>
+      {% endfor %} {% else %}
+      <p class="text-center text-secondary py-3">
+        No notes yet. Add your first one below!
+      </p>
+      {% endif %}
+    </ul>
+  </div>
+
+  <!-- Add notes form -->
+  <div
+    class="col-12 col-md-10 col-lg-8 col-xl-7 bg-dark text-white p-4 p-md-5 rounded-4 shadow-custom-green my-5"
+  >
+    <!-- Add Note Form -->
+    <form method="POST" id="noteForm">
+      <h5 class="fw-bold text-center mb-4 text-teal">Add New Note</h5>
+      <div class="input-group mb-3">
+        <textarea
+          name="note"
+          id="note"
+          class="form-control px-3 py-3 shadow-none bg-dark text-white border-secondary rounded-3"
+          placeholder="Write your note here..."
+          rows="2"
+          required
+        ></textarea>
+      </div>
+
+      <div class="text-center">
+        <button
+          id="submitButton"
+          type="submit"
+          class="btn btn-teal w-100 p-3 rounded-3 fw-medium fs-5"
+        >
+          Add Note
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

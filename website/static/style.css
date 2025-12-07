@@ -1,0 +1,54 @@
+./*
+  Custom styles for Notes App.
+
+  These small helper classes are used alongside Bootstrap. They are
+  purposely simple so beginners can see how a few utility classes
+  adjust the UI.
+*/
+
+/* Small lifted shadow used on card-like elements */
+.shadow-custom-green {
+  box-shadow: 8px 8px 10px rgba(23, 2, 2, 0.6);
+  transition: all 0.3s ease-in-out;
+}
+
+.shadow-custom-green:hover {
+  /* Slightly larger shadow on hover for a "lift" effect */
+  box-shadow: 15px 15px 15px rgba(23, 2, 2, 0.6);
+}
+
+/* Simple text color helper */
+.text-teal {
+  color: teal;
+}
+
+/* Button color variables to keep Bootstrap buttons teal */
+.btn-teal {
+  --bs-btn-bg: teal;
+  --bs-btn-border-color: teal;
+  --bs-btn-hover-bg: rgba(0, 128, 128, 0.779);
+  --bs-btn-hover-border-color: rgba(0, 128, 128, 0.787);
+  --bs-btn-color: #fff;
+}
+
+/* Style checkboxes to match the teal accent */
+input[type="checkbox"] {
+  accent-color: teal;
+  border: 1px solid teal;
+  cursor: pointer;
+}
+
+/* Make placeholder text more visible on dark backgrounds */
+textarea::placeholder {
+  opacity: 1 !important;
+  color: rgba(255, 255, 255, 0.373) !important;
+}
+
+/* Hover lift for list items */
+.list-hover {
+  transition: all 0.3s ease-in-out;
+}
+
+.list-hover:hover {
+  transform: translateY(-5%);
+}
